@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link href="00 source/favicon.png" rel="icon" >
+		<title>
+			Veggie Recipe
+		</title>
+
+		<!-- Style 영역 -->
+		<style>
+			@import url('https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&display=swap');
+	
+	        * 
+	        {
+	        	margin: 0;
+        		padding: 0;
+        		box-sizing: border-box;
+    		}
+    		
+    		/* BODY 영역 */
+    		body 
+    		{
+        		font-family: 'Pretendard', sans-serif;
+        		background-color: #FFFFFF;
+        		color: #333;
+        	}
+
+    		/* HEADER 영역 */
+    		header 
+    		{
+        		background-color: transparent;
+        		display: flex;
+        		justify-content: center;
+        		align-items: center;
+        		height: 120px; 
+        		padding: 0 20px;
+        	}
+
+        	#header
+        	{
+        		width: 100%;
+        		max-width: 1440px;
+        		display: flex;
+        		align-items: center;
+        		justify-content: space-between;
+        	}
+
+    		/* 로고 영역 */
+        	.logo
+        	{
+        		text-decoration-line: none;
+        	}
+
+        	.logo p
+        	{
+        		font-family: 'Arial Black';
+		        color: #000000;
+		        font-size: clamp(20px, 2.4vw, 35px);
+        	}
+
+    		/* 네비게이션 영역 */
+        	nav 
+        	{
+        		justify-content: flex-end;
+        		border: 3px solid #000000;
+        		border-radius: 50px;
+        		padding: 20px 50px;
+    		}
+
+        	nav ul 
+    		{
+        		display: flex;
+        		gap: clamp(20px, 5vw, 40px);
+        		list-style: none;
+        	}
+
+        	nav ul li a 
+        	{
+		        text-decoration: none;
+		        font-family: 'Pretendard', sans-serif;
+		        font-weight: bold;
+		        color: #000000;
+		        font-size: 20px;
+		        transition: color 0.3s;
+		        position: relative;
+		        display: inline-block;
+		        padding-bottom: 5px;
+        	}
+
+        	nav ul li a::after
+        	{
+        		content: '';
+			    position: absolute;
+			    width: 0; /* 초기 너비 0 */
+			    height: 3px; /* 밑줄 두께 */
+			    left: 0;
+			    bottom: 0; /* 텍스트에서 약간 떨어지게 배치 */
+			    background-color: #000000; /* 밑줄 색상 */
+			    transition: width 0.3s ease-out; /* 너비 전환 애니메이션 */
+        	}
+
+        	nav ul li a:hover 
+        	{
+        		opacity: 0.8;
+        		color: #000000;
+        	}
+
+        	nav ul li a:hover::after
+        	{
+        		width: 100%;	
+        	}
+
+
+
+    		/* MAIN 영역 */
+ 			main
+ 			{
+ 				display: block;	
+ 				width: 100%;
+ 				max-width: 1440px;
+ 				margin: 0 auto;
+ 				flex-direction: column;
+ 			}
+
+ 			#main_text
+ 			{
+ 				width: 100%;
+ 				margin-top: 120px;
+ 				text-align: center;
+ 				font-family: 'Arial';
+ 				font-weight: bold;
+ 				color: #000000;
+ 				font-size: clamp(100px, 11vw, 200px);
+ 				padding: 0 20px;
+ 			}
+
+ 			/*---------------- RECIPE ----------------*/
+ 			.recipe_container 
+ 			{
+			    width: 100%;
+			    max-width: 1200px;
+			    margin: 100px auto 150px; /* 상단 여백, 중앙 정렬, 하단 여백 */
+			    padding: 0 40px;
+			    position: relative; /* 화살표 위치 기준 */
+			}
+
+			/* 레시피 제목 영역 */
+			.recipe_title 
+			{
+			    font-size: clamp(35px, 5vw, 60px);
+			    font-family: 'Arial Black', sans-serif;
+			    font-weight: 900;
+			    color: #000000;
+			    margin-bottom: 5px;
+			}
+
+			.recipe_subtitle 
+			{
+			    font-size: clamp(16px, 2vw, 24px);
+			    font-weight: normal;
+			    color: #666;
+			    margin-bottom: 50px;
+			}
+
+			/* 슬라이드 트랙 (레시피 카드 전체 컨테이너) */
+			.recipe_slider 
+			{
+			    display: flex;
+			    overflow: hidden; /* 슬라이드 숨김 처리 */
+			    scroll-behavior: smooth; /* 부드러운 스크롤 */
+			    position: relative;
+			    /* (여기서는 자바스크립트를 사용하지 않기 때문에, 첫 번째 레시피만 표시되도록 구성합니다.) */
+			}
+
+			/* 개별 레시피 카드 (슬라이드의 한 페이지) */
+			.recipe_slide 
+			{
+			    min-width: 100%;
+			    box-sizing: border-box;
+			    padding: 0 20px;
+			}
+
+			/* 레시피 이미지 영역 */
+			.recipe_image_box 
+			{
+			    width: 100%;
+			    display: flex;
+			    justify-content: center;
+			    margin-bottom: 80px;
+			    position: relative;
+			}
+
+			.recipe_image_box img 
+			{
+			    width: 100%;
+			    max-width: 500px; /* 이미지 최대 크기 */
+			    height: auto;
+			    object-fit: cover;
+			}
+
+			/* 조리 과정 (4단계) 컨테이너 */
+			.steps_container 
+			{
+			    display: flex;
+			    justify-content: space-between;
+			    gap: 30px;
+			    text-align: left;
+			}
+
+			.step_card 
+			{
+			    flex: 1; /* 4단계가 동일한 너비를 갖도록 */
+			    max-width: 25%;
+			}
+
+			.step_number 
+			{
+			    font-size: clamp(30px, 4vw, 50px);
+			    font-family: 'Arial Black', sans-serif;
+			    font-weight: 900;
+			    color: #000000;
+			    margin-bottom: 10px;
+			}
+
+			.step_title 
+			{
+			    font-size: clamp(18px, 2vw, 24px);
+			    font-family: 'Arial Black', sans-serif;
+			    font-weight: 900;
+			    color: #000000;
+			    margin-bottom: 15px;
+			}
+
+			.step_description 
+			{
+			    font-size: 16px;
+			    line-height: 1.6;
+			    color: #333;
+			}
+
+			/* 슬라이드 화살표 스타일 */
+			.slide_arrow 
+			{
+			    position: absolute;
+			    top: 50%; /* 컨테이너의 중앙에 위치 */
+			    transform: translateY(-50%);
+			    background: none;
+			    border: none;
+			    font-size: 50px;
+			    color: #000000;
+			    cursor: pointer;
+			    z-index: 10;
+			    padding: 0;
+			    opacity: 0.3;
+			    transition: opacity 0.2s;
+			}
+
+			.slide_arrow:hover 
+			{
+			    opacity: 1;
+			}
+
+			#prev_arrow 
+			{
+			    left: 0; /* 왼쪽 끝 */
+			}
+
+			#next_arrow 
+			{
+			    right: 0; /* 오른쪽 끝 */
+			}
+
+			/* 모바일 반응형: 4단계 레이아웃 변경 */
+			@media (max-width: 800px) 
+			{
+			    .steps_container 
+			    {
+			        flex-wrap: wrap; /* 2x2 형태로 줄 바꿈 */
+			        justify-content: flex-start;
+			    }
+			    .step_card 
+			    {
+			        flex: 0 0 45%; /* 한 줄에 2개씩 (45% 너비) */
+			        max-width: 45%;
+			        margin-bottom: 40px;
+			    }
+
+			    /* 화살표가 내용과 겹치지 않도록 */
+			    #prev_arrow { left: 10px; }
+			    #next_arrow { right: 10px; }
+			    .recipe_container { padding: 0 20px; }
+			}
+
+			@media (max-width: 480px) 
+			{
+			    .step_card 
+			    {
+			        flex: 0 0 100%; /* 한 줄에 1개씩 (100% 너비) */
+			        max-width: 100%;
+			    }
+			}
+
+
+
+
+
+
+
+
+    		/* FOOTER 영역 */
+        	footer
+        	{
+        		background-color: #000000;
+        		display : flex;
+        		justify-content: center;
+        		align-items: center;
+        		padding: 0 20px;
+        		height: 120px;
+        	}
+
+        	#footer
+        	{
+        		width: 100%;
+        		max-width: 1440px;
+        		display: flex;
+        		justify-content: space-between;
+        		align-items: center;
+        	}
+
+        	.footer_logo
+        	{
+        		font-family: 'Arial Black';
+		        color: #FFFFFF;
+		        font-size: clamp(20px, 2.4vw, 35px);
+		        font-weight: bold;
+        	}
+
+        	.copy
+        	{
+        		color: #ffffff;
+        		font-family: 'Pretendard', sans-serif;
+        		font-size: clamp(10px, 1.2vw, 16px);
+        		font-weight: normal;
+        		margin: 0;
+        	}
+
+		</style>
+	</head>
+
+
+
+
+
+<body>
+	<header>
+		<div id="header">
+			<a href="index.html" class="logo">
+	            <p class="logo">
+	            	Veggie Buddy
+	        	</p>
+        	</a>
+	        <nav>
+	            <ul>
+	            <li><a href="test.html">Test</a></li>
+	            <li><a href="buddys.html">Buddys</a></li>
+	            <li><a href="health.html">Health</a></li>
+	            <li><a href="recipe.html">Recipe</a></li>
+	            <li><a href="library.html">Library</a></li>
+	            </ul>
+	        </nav>
+        </div>
+	</header>
+	
+	<main>
+		<div class="recipe_container">
+            
+            <button id="prev_arrow" class="slide_arrow">
+                &lt;
+            </button>
+            
+            <div class="recipe_slider" id="recipe_slider">
+                
+                <div class="recipe_slide" data-recipe-id="0">
+                    <h1 class="recipe_title">Caprese Salad</h1>
+                    <h2 class="recipe_subtitle">(Tomato & Mozzarella)</h2>
+
+                    <div class="recipe_image_box">
+                        <img src="00 source/05 recipe/food_1.png" alt="Caprese Salad">
+                    </div>
+
+                    <div class="steps_container">
+                        <div class="step_card">
+                            <p class="step_number">01.</p>
+                            <p class="step_title">Slice</p>
+                            <p class="step_description">Cut tomato and mozzarella into even slices.</p>
+                        </div>
+                        <div class="step_card">
+                            <p class="step_number">02.</p>
+                            <p class="step_title">Layer</p>
+                            <p class="step_description">Arrange tomato, cheese, and basil on a plate.</p>
+                        </div>
+                        <div class="step_card">
+                            <p class="step_number">03.</p>
+                            <p class="step_title">Season</p>
+                            <p class="step_description">Sprinkle with salt and pepper.</p>
+                        </div>
+                        <div class="step_card">
+                            <p class="step_number">04.</p>
+                            <p class="step_title">Drizzle</p>
+                            <p class="step_description">Add olive oil (optional: balsamic syrup).</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="recipe_slide" data-recipe-id="1">
+                    <h1 class="recipe_title">Carrot Cake</h1>
+                    <h2 class="recipe_subtitle"></h2> <div class="recipe_image_box">
+                        <img src="00 source/05 recipe/food_2.png" alt="Carrot Cake">
+                    </div>
+
+                    <div class="steps_container">
+                        <div class="step_card">
+                            <p class="step_number">01.</p>
+                            <p class="step_title">Prep</p>
+                            <p class="step_description">Grate carrots and preheat oven.</p>
+                        </div>
+                        <div class="step_card">
+                            <p class="step_number">02.</p>
+                            <p class="step_title">Mix</p>
+                            <p class="step_description">Combine carrots, flour, sugar, eggs, oil, and spices.</p>
+                        </div>
+                        <div class="step_card">
+                            <p class="step_number">03.</p>
+                            <p class="step_title">Bake</p>
+                            <p class="step_description">Pour batter into a pan and bake until golden.</p>
+                        </div>
+                        <div class="step_card">
+                            <p class="step_number">04.</p>
+                            <p class="step_title">Finish</p>
+                            <p class="step_description">Cool and top with cream cheese frosting.</p>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <button id="next_arrow" class="slide_arrow">
+                &gt;
+            </button>
+
+        </div>
+		
+	</main>
+
+
+    <script>
+        const slider = document.getElementById('recipe_slider');
+        const slides = document.querySelectorAll('.recipe_slide');
+        const prevArrow = document.getElementById('prev_arrow');
+        const nextArrow = document.getElementById('next_arrow');
+        let currentIndex = 0;
+        
+        // 슬라이드 이동 함수
+        function goToSlide(index) {
+            if (index < 0) {
+                currentIndex = slides.length - 1; // 마지막 슬라이드로 순환
+            } else if (index >= slides.length) {
+                currentIndex = 0; // 첫 번째 슬라이드로 순환
+            } else {
+                currentIndex = index;
+            }
+            // 슬라이드 이동 (가로 스크롤)
+            const offset = currentIndex * slider.offsetWidth;
+            slider.scrollTo({
+                left: offset,
+                behavior: 'smooth'
+            });
+        }
+        
+        // 버튼 클릭 이벤트 리스너
+        prevArrow.addEventListener('click', () => {
+            goToSlide(currentIndex - 1);
+        });
+        
+        nextArrow.addEventListener('click', () => {
+            goToSlide(currentIndex + 1);
+        });
+
+        // 윈도우 크기 변경 시 현재 슬라이드로 위치 재조정 (반응형 대응)
+        window.addEventListener('resize', () => {
+            const offset = currentIndex * slider.offsetWidth;
+            slider.scrollTo({
+                left: offset,
+                behavior: 'auto' // 크기 변경 시 부드러운 효과 없이 바로 이동
+            });
+        });
+        
+        // 초기 로드 시 첫 번째 슬라이드로 설정
+        goToSlide(0);
+
+    </script>
+			
+		
+	</main>
+
+
+
+
+	<footer>
+        <div id="footer">
+			<p class="footer_logo">
+				Veggie Buddy
+			</p>
+
+			<p class="copy">
+				COPYRIGHT © 2025 ALL RIGHTS RESERVED BY Veggie Buddy
+			</p>
+		</div>
+	</footer>
+
+</body>
+
+</html>

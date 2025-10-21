@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link href="00 source/favicon.png" rel="icon" >
+		<title>
+			Veggie Buddy
+		</title>
+
+		<!-- Style 영역 -->
+		<style>
+			@import url('https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&display=swap');
+	
+	        * 
+	        {
+	        	margin: 0;
+        		padding: 0;
+        		box-sizing: border-box;
+    		}
+    		
+    		/* BODY 영역 */
+    		body 
+    		{
+        		font-family: 'Pretendard', sans-serif;
+        		background-color: #FFFFFF;
+        		color: #333;
+        	}
+
+    		/* HEADER 영역 */
+    		header 
+    		{
+        		background-color: transparent;
+        		display: flex;
+        		justify-content: center;
+        		align-items: center;
+        		height: 120px; 
+        		padding: 0 20px;
+        	}
+
+        	#header
+        	{
+        		width: 100%;
+        		max-width: 1440px;
+        		display: flex;
+        		align-items: center;
+        		justify-content: space-between;
+        	}
+
+    		/* 로고 영역 */
+        	.logo
+        	{
+        		text-decoration-line: none;
+        	}
+
+        	.logo p
+        	{
+        		font-family: 'Arial Black';
+		        color: #000000;
+		        font-size: clamp(20px, 2.4vw, 35px);
+        	}
+
+    		/* 네비게이션 영역 */
+        	nav 
+        	{
+        		justify-content: flex-end;
+        		border: 3px solid #000000;
+        		border-radius: 50px;
+        		padding: 20px 50px;
+    		}
+
+        	nav ul 
+    		{
+        		display: flex;
+        		gap: clamp(20px, 5vw, 40px);
+        		list-style: none;
+        	}
+
+        	nav ul li a 
+        	{
+		        text-decoration: none;
+		        font-family: 'Pretendard', sans-serif;
+		        font-weight: bold;
+		        color: #000000;
+		        font-size: 20px;
+		        transition: color 0.3s;
+		        position: relative;
+		        display: inline-block;
+		        padding-bottom: 5px;
+        	}
+
+        	nav ul li a::after
+        	{
+        		content: '';
+			    position: absolute;
+			    width: 0; /* 초기 너비 0 */
+			    height: 3px; /* 밑줄 두께 */
+			    left: 0;
+			    bottom: 0; /* 텍스트에서 약간 떨어지게 배치 */
+			    background-color: #000000; /* 밑줄 색상 */
+			    transition: width 0.3s ease-out; /* 너비 전환 애니메이션 */
+        	}
+
+        	nav ul li a:hover 
+        	{
+        		opacity: 0.8;
+        		color: #000000;
+        	}
+
+        	nav ul li a:hover::after
+        	{
+        		width: 100%;	
+        	}
+
+    		/* MAIN 영역 */
+ 			main
+ 			{
+ 				display: block;	
+ 				width: 100%;
+ 				max-width: 1440px;
+ 				margin: 0 auto;
+ 				flex-direction: column;
+ 			}
+
+ 			#main_text
+ 			{
+ 				width: 100%;
+ 				margin-top: 120px;
+ 				text-align: center;
+ 				font-family: 'Arial';
+ 				font-weight: bold;
+ 				color: #000000;
+ 				font-size: clamp(140px, 11vw, 180px);
+ 				padding: 0 20px;
+ 			}
+
+
+ 			/*---------------- CAROUSEL ----------------*/
+ 			.main_image_slider
+ 			{
+ 				width: 100%;
+ 				overflow-x: scroll;
+ 				scroll-snap-type: x mandatory;
+ 				cursor: default;
+ 				user-select: none;
+ 			}
+
+ 			.main_image_slider::-webkit-scrollbar 
+ 			{
+			    display: none;
+			}
+			
+			.main_image_slider 
+			{
+			    -ms-overflow-style: none;
+			    scrollbar-width: none;
+			    -webkit-overflow-scrolling: touch;
+			}
+
+			.slider_track 
+			{
+    			display: flex;
+			    width: max-content; 
+			}
+
+			.slider_item 
+			{
+			    flex-shrink: 0;               
+			    width: calc(100% - 40px);   
+			    max-width: 1440px; 
+			    height: 800px;
+			    margin: 0 20px;
+			    scroll-snap-align: center;
+			    position: relative;
+			}
+
+			.overlay_text
+			{
+				position: absolute;
+				bottom: 20px; 
+    			left: 20px;
+    			color: #FFFFFF;
+    			font-size: 24px;
+			    font-family: Arial, sans-serif;
+			    line-height: 1.4;
+			    width: 90%; 
+			    padding: 10px;
+			    box-sizing: border-box;
+			}
+
+			.overlay_text p 
+			{
+				margin: 0;
+				text-shadow: 1px 1px 3px rgba(0, 0, 0, 1.0);
+				display: inline-block;
+			}
+
+			.slider_item img 
+			{
+			    width: 100%;
+			    height: 100%;
+			    object-fit: cover;
+			    display: block;
+			}
+
+
+			/*---------------- CTA 영 ----------------*/
+			#cta_section
+			{
+				width: 100%;
+				margin: 40px auto 40px;
+				display: block;
+				position: relative;
+				height: 1000px;
+				background-image: url('00 source/01 main/cta_img/cta_bg.png');
+				background-size: cover;
+				background-position: center center;
+				background-repeat: no-repeat;
+				padding: 0;
+				max-width: none;
+			}
+
+			/* 텍스트 컨테이너 */
+			.cta_content 
+			{
+			    position: absolute;
+			    top: 0;
+			    left: 30%;
+				transform: translateX(-50%);
+				max-width: 700px;
+				width: 100%;
+				height: 100%;
+			    display: flex;
+			    flex-direction: column;
+			    justify-content: center;
+			    padding: 0 40px;
+			    box-sizing: border-box;
+			}
+
+			.cta_content h1 
+			{
+			    font-size: clamp(40px, 4vw, 72px);
+			    line-height: 1.1;
+			    font-weight: bold;
+			    color: #4b591b;
+			    margin-bottom: 40px;
+			}
+
+			.cta_button 
+			{
+			    display: inline-flex;
+			    align-items: center;
+			    text-decoration: none;
+			    font-size: 30px;
+			    font-weight: bold;
+			    color: #000000;
+			    border-bottom: 3px solid #000000;
+			    padding-bottom: 5px;
+			    transition: all 0.3s;
+			    width: fit-content;
+			}
+
+			.cta_button:hover 
+			{
+			    color: #4b591b;
+			    border-color: #4b591b;
+			}
+
+			/* 버튼 안의 화살표 */
+			.cta_button span 
+			{
+			    margin-left: 10px;
+			    font-size: 1.2em;
+			    transform: translateY(2px);
+			    transition: margin-left 0.3s;
+			}
+
+			/* 버튼 호버 시 화살표 이동 효과 */
+			.cta_button:hover span 
+			{
+			    margin-left: 15px;
+			}
+
+
+    		/* FOOTER 영역 */
+        	footer
+        	{
+        		background-color: #000000;
+        		display : flex;
+        		justify-content: center;
+        		align-items: center;
+        		padding: 0 20px;
+        		height: 120px;
+        	}
+
+        	#footer
+        	{
+        		width: 100%;
+        		max-width: 1440px;
+        		display: flex;
+        		justify-content: space-between;
+        		align-items: center;
+        	}
+
+        	.footer_logo
+        	{
+        		font-family: 'Arial Black';
+		        color: #FFFFFF;
+		        font-size: clamp(20px, 2.4vw, 35px);
+		        font-weight: bold;
+        	}
+
+        	.copy
+        	{
+        		color: #ffffff;
+        		font-family: 'Pretendard', sans-serif;
+        		font-size: clamp(10px, 1.2vw, 16px);
+        		font-weight: normal;
+        		margin: 0;
+        	}
+
+		</style>
+	</head>
+
+
+
+
+
+<body>
+	<header>
+		<div id="header">
+			<a href="index.html" class="logo">
+	            <p class="logo">
+	            	Veggie Buddy
+	        	</p>
+        	</a>
+	        <nav>
+	            <ul>
+	            <li><a href="test.html">Test</a></li>
+	            <li><a href="buddys.html">Buddys</a></li>
+	            <li><a href="health.html">Health</a></li>
+	            <li><a href="recipe.html">Recipe</a></li>
+	            <li><a href="library.html">Library</a></li>
+	            </ul>
+	        </nav>
+        </div>
+	</header>
+	
+	<main>
+			<p id="main_text">VEGGIE BUDDY</p>
+
+			<div class="main_image_slider">
+				<div class="slider_track">
+	            	<div class="slider_item">
+	            		<img src="00 source/01 main/c_group/01.png" alt="Tomato">
+	            		<div class="overlay_text">
+	            			<p>
+	            				Tomato is Red. 
+	            			</p>
+            			</div>
+	            	</div>
+	            	<div class="slider_item">
+	            		<img src="00 source/01 main/c_group/02.png" alt="Broccoli">
+	            		<div class="overlay_text">
+	            			<p>
+	            				Broccoli is Green.
+	            			</p>
+            			</div>
+	            	</div>
+	            	<div class="slider_item">
+	            		<img src="00 source/01 main/c_group/03.png" alt="Carrot">
+	            		<div class="overlay_text">
+	            			<p>
+	            				Carrot is Orange.
+	            			</p>
+            			</div>
+	            	</div>
+	            	<div class="slider_item">
+	            		<img src="00 source/01 main/c_group/04.png" alt="Onion">
+	            		<div class="overlay_text">
+	            			<p>
+	            				Onion is Purple.
+	            			</p>
+            			</div>
+	            	</div>
+	        	</div>
+        	</div>
+
+        	<section id="cta_section">
+        		<div class="cta_overlay"></div>
+        		<div class="cta_content">
+        			<h1>
+        				We'll tell you which veggie suits your taste best!
+        			</h1>
+        			<a href="test.html" class="cta_button">
+                        Go to Test <span>&#8599;</span> 
+                    </a>
+                </div>
+        	</section>
+		
+	</main>
+
+
+
+
+	<footer>
+        <div id="footer">
+			<p class="footer_logo">
+				Veggie Buddy
+			</p>
+
+			<p class="copy">
+				COPYRIGHT © 2025 ALL RIGHTS RESERVED BY Veggie Buddy
+			</p>
+		</div>
+	</footer>
+
+</body>
+
+</html>

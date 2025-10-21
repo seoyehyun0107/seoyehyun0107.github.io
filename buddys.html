@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link href="00 source/favicon.png" rel="icon" >
+		<title>
+			Veggie Buddys
+		</title>
+
+		<!-- Style 영역 -->
+		<style>
+			@import url('https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&display=swap');
+	
+	        * 
+	        {
+	        	margin: 0;
+        		padding: 0;
+        		box-sizing: border-box;
+    		}
+    		
+    		/* BODY 영역 */
+    		body 
+    		{
+        		font-family: 'Pretendard', sans-serif;
+        		background-color: #FFFFFF;
+        		color: #333;
+        	}
+
+    		/* HEADER 영역 */
+    		header 
+    		{
+        		background-color: transparent;
+        		display: flex;
+        		justify-content: center;
+        		align-items: center;
+        		height: 120px; 
+        		padding: 0 20px;
+        	}
+
+        	#header
+        	{
+        		width: 100%;
+        		max-width: 1440px;
+        		display: flex;
+        		align-items: center;
+        		justify-content: space-between;
+        	}
+
+    		/* 로고 영역 */
+        	.logo
+        	{
+        		text-decoration-line: none;
+        	}
+
+        	.logo p
+        	{
+        		font-family: 'Arial Black';
+		        color: #000000;
+		        font-size: clamp(20px, 2.4vw, 35px);
+        	}
+
+    		/* 네비게이션 영역 */
+        	nav 
+        	{
+        		justify-content: flex-end;
+        		border: 3px solid #000000;
+        		border-radius: 50px;
+        		padding: 20px 50px;
+    		}
+
+        	nav ul 
+    		{
+        		display: flex;
+        		gap: clamp(20px, 5vw, 40px);
+        		list-style: none;
+        	}
+
+        	nav ul li a 
+        	{
+		        text-decoration: none;
+		        font-family: 'Pretendard', sans-serif;
+		        font-weight: bold;
+		        color: #000000;
+		        font-size: 20px;
+		        transition: color 0.3s;
+		        position: relative;
+		        display: inline-block;
+		        padding-bottom: 5px;
+        	}
+
+        	nav ul li a::after
+        	{
+        		content: '';
+			    position: absolute;
+			    width: 0; /* 초기 너비 0 */
+			    height: 3px; /* 밑줄 두께 */
+			    left: 0;
+			    bottom: 0; /* 텍스트에서 약간 떨어지게 배치 */
+			    background-color: #000000; /* 밑줄 색상 */
+			    transition: width 0.3s ease-out; /* 너비 전환 애니메이션 */
+        	}
+
+        	nav ul li a:hover 
+        	{
+        		opacity: 0.8;
+        		color: #000000;
+        	}
+
+        	nav ul li a:hover::after
+        	{
+        		width: 100%;	
+        	}
+
+
+    		/* MAIN 영역 */
+ 			main
+ 			{
+ 				display: block;	
+ 				width: 100%;
+ 				max-width: 1920px;
+ 				margin: 0 auto;
+ 				flex-direction: column;
+ 			}
+
+ 			#main_text
+ 			{
+ 				width: 100%;
+ 				margin-top: 120px;
+ 				text-align: center;
+ 				font-family: 'Arial';
+ 				font-weight: bold;
+ 				color: #000000;
+ 				font-size: clamp(100px, 11vw, 200px);
+ 				padding: 0 20px;
+ 			}
+
+ 			/*---------------- BUDDYS ----------------*/
+ 			/* -------------- 토마토 -------------- */
+ 			.buddy_test_t
+ 			{
+			   max-height: 1000px;
+			   height: calc(100vh - 120px);
+			   min-height: 600px;
+			   overflow: hidden;
+			   width: 100%;
+			   background-image: url('00 source/03 buddys/t_bg.png');
+			   background-size: cover;
+			   background-position: center center;
+			   background-repeat: no-repeat;
+			   position: relative; 
+			}
+
+			/* 캐릭터 및 클릭 요소를 담는 중앙 컨테이너 */
+			.character_container_t
+			{
+			    width: 500px;
+			    height: 500px;
+			    position: absolute;
+			    
+			    /* 정중앙 배치 */
+			    top: 50%;
+			    left: 50%;
+			    transform: translate(-50%, -50%);
+			}
+
+			/* 1. t_opa.png (흐릿한 토마토) */
+			.t_opaque 
+			{
+			    width: 100%;
+			    height: 100%;
+			    position: absolute;
+			    top: 0;
+			    left: 0;
+			    transition: opacity 0.5s;
+			    /* transition: opacity 0.5s; 클릭 시 불투명도를 조정할 수 있습니다. */
+			}
+
+			/* 2. t_cha.jpg (토마토 캐릭터) - 초기에는 숨기거나 투명하게 */
+			.t_character 
+			{
+			    width: 100%;
+			    height: 100%;
+			    position: absolute;
+			    top: 0;
+			    left: 0;
+			    opacity: 0; /* 초기에는 숨김 */
+			    transition: opacity 0.5s;
+			    z-index: 100;
+			}
+
+			/* 마우스 오버 시 효과 (선택 사항) */
+			.click_button:hover 
+			{
+			    color: #555555;
+			}
+
+			/* 마우스 오버 시 캐릭터 보이기 */
+			.character_container_t:hover .t_character 
+			{
+			    opacity: 1; 
+			}
+
+			/* 마우스 오버 시 흐릿한 토마토 배경 투명하게 */
+			.character_container_t:hover .t_opaque 
+			{
+			    opacity: 0; 
+			}
+
+			/* 토마토 Text 영역 */
+			.text_area_t
+			{
+				position: absolute;
+				top: 50%;
+				transform: translateY(-50%);
+				width: 250px;
+				color: #ffffff;
+				z-index: 5;
+				text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+				padding: 20px;
+			}
+
+			.text_area_t h2 
+			{
+			    font-size: clamp(20px, 2.5vw, 36px);
+			    line-height: 1.2;
+			    margin-bottom: 10px;
+			}
+
+			.text_area_t p 
+			{
+			    font-size: clamp(14px, 1.2vw, 16px);
+			    line-height: 1.5;
+			}
+
+			.text_left_t
+			{
+			    top: 30%;
+			    left: 10%; 
+			    text-align: left;
+			}
+
+			.text_right_t
+			{
+			    top: 70%;
+			    right: 10%;
+			    text-align: right;
+			}
+
+			/* -------------- 브로콜리 -------------- */
+			.buddy_test_b
+ 			{
+			   max-height: 1000px;
+			   height: calc(100vh - 120px);
+			   min-height: 600px;
+			   overflow: hidden;
+			   width: 100%;
+			   background-image: url('00 source/03 buddys/b_bg.png');
+			   background-size: cover;
+			   background-position: center center;
+			   background-repeat: no-repeat;
+			   position: relative; 
+			}
+
+			/* 캐릭터 및 클릭 요소를 담는 중앙 컨테이너 */
+			.character_container_b
+			{
+			    width: 500px;
+			    height: 500px;
+			    position: absolute;
+			    
+			    /* 정중앙 배치 */
+			    top: 50%;
+			    left: 50%;
+			    transform: translate(-50%, -50%);
+			}
+
+			/* 1. t_opa.png (흐릿한 브로콜리) */
+			.b_opaque 
+			{
+			    width: 115%;
+			    height: 100%;
+			    position: absolute;
+			    top: 0;
+			    left: -10%;
+			    transition: opacity 0.5s;
+			    /* transition: opacity 0.5s; 클릭 시 불투명도를 조정할 수 있습니다. */
+			}
+
+			/* 2. t_cha.jpg (브로콜리 캐릭터) - 초기에는 숨기거나 투명하게 */
+			.b_character 
+			{
+			    width: 115%;
+			    height: 100%;
+			    position: absolute;
+			    top: 0;
+			    left: -10%;
+			    opacity: 0; /* 초기에는 숨김 */
+			    transition: opacity 0.5s;
+			    z-index: 100;
+			}
+
+			/* 마우스 오버 시 효과 (선택 사항) */
+			.click_button:hover 
+			{
+			    color: #555555;
+			}
+
+			/* 마우스 오버 시 캐릭터 보이기 */
+			.character_container_b:hover .b_character 
+			{
+			    opacity: 1; 
+			}
+
+			/* 마우스 오버 시 흐릿한 브로콜리 배경 투명하게 */
+			.character_container_b:hover .b_opaque 
+			{
+			    opacity: 0; 
+			}
+
+			/* 브로콜리 Text 영역 */
+			.text_area_b
+			{
+				position: absolute;
+				top: 50%;
+				transform: translateY(-50%);
+				width: 250px;
+				color: #ffffff;
+				z-index: 5;
+				text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+				padding: 20px;
+			}
+
+			.text_area_b h2 
+			{
+			    font-size: clamp(20px, 2.5vw, 36px);
+			    line-height: 1.2;
+			    margin-bottom: 10px;
+			}
+
+			.text_area_b p 
+			{
+			    font-size: clamp(14px, 1.2vw, 16px);
+			    line-height: 1.5;
+			}
+
+			.text_left_b
+			{
+			    top: 70%;
+			    left: 10%; 
+			    text-align: left;
+			}
+
+			.text_right_b
+			{
+			    top: 30%;
+			    right: 10%;
+			    text-align: right;
+			}
+
+			/* -------------- 당근 -------------- */
+			.buddy_test_c
+ 			{
+			   max-height: 1000px;
+			   height: calc(100vh - 120px);
+			   min-height: 600px;
+			   overflow: hidden;
+			   width: 100%;
+			   background-image: url('00 source/03 buddys/c_bg.png');
+			   background-size: cover;
+			   background-position: center center;
+			   background-repeat: no-repeat;
+			   position: relative; 
+			}
+
+			/* 캐릭터 및 클릭 요소를 담는 중앙 컨테이너 */
+			.character_container_c
+			{
+			    width: 500px;
+			    height: 500px;
+			    position: absolute;
+			    
+			    /* 정중앙 배치 */
+			    top: 50%;
+			    left: 50%;
+			    transform: translate(-50%, -50%);
+			}
+
+			/* 1. t_opa.png (흐릿한 당근) */
+			.c_opaque 
+			{
+			    width: 115%;
+			    height: 100%;
+			    position: absolute;
+			    top: 0;
+			    left: -10%;
+			    transition: opacity 0.5s;
+			    /* transition: opacity 0.5s; 클릭 시 불투명도를 조정할 수 있습니다. */
+			}
+
+			/* 2. t_cha.jpg (당근 캐릭터) - 초기에는 숨기거나 투명하게 */
+			.c_character 
+			{
+			    width: 115%;
+			    height: 100%;
+			    position: absolute;
+			    top: 0;
+			    left: -10%;
+			    opacity: 0; /* 초기에는 숨김 */
+			    transition: opacity 0.5s;
+			    z-index: 100;
+			}
+
+			/* 마우스 오버 시 효과 (선택 사항) */
+			.click_button:hover 
+			{
+			    color: #555555;
+			}
+
+			/* 마우스 오버 시 캐릭터 보이기 */
+			.character_container_c:hover .c_character 
+			{
+			    opacity: 1; 
+			}
+
+			/* 마우스 오버 시 흐릿한 당근 배경 투명하게 */
+			.character_container_c:hover .c_opaque 
+			{
+			    opacity: 0; 
+			}
+
+			/* 당근 Text 영역 */
+			.text_area_c
+			{
+				position: absolute;
+				top: 50%;
+				transform: translateY(-50%);
+				width: 250px;
+				color: #ffffff;
+				z-index: 5;
+				text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+				padding: 20px;
+			}
+
+			.text_area_c h2 
+			{
+			    font-size: clamp(20px, 2.5vw, 36px);
+			    line-height: 1.2;
+			    margin-bottom: 10px;
+			}
+
+			.text_area_c p 
+			{
+			    font-size: clamp(14px, 1.2vw, 16px);
+			    line-height: 1.5;
+			}
+
+			.text_left_c
+			{
+			    top: 30%;
+			    left: 10%; 
+			    text-align: left;
+			}
+
+			.text_right_c
+			{
+			    top: 70%;
+			    right: 10%;
+			    text-align: right;
+			}
+
+			/* -------------- 양파 -------------- */
+			.buddy_test_o
+ 			{
+			   max-height: 1000px;
+			   height: calc(100vh - 120px);
+			   min-height: 600px;
+			   overflow: hidden;
+			   width: 100%;
+			   background-image: url('00 source/03 buddys/o_bg.png');
+			   background-size: cover;
+			   background-position: center center;
+			   background-repeat: no-repeat;
+			   position: relative; 
+			}
+
+			/* 캐릭터 및 클릭 요소를 담는 중앙 컨테이너 */
+			.character_container_o
+			{
+			    width: 500px;
+			    height: 500px;
+			    position: absolute;
+			    
+			    /* 정중앙 배치 */
+			    top: 50%;
+			    left: 50%;
+			    transform: translate(-50%, -50%);
+			}
+
+			/* 1. t_opa.png (흐릿한 양파) */
+			.o_opaque 
+			{
+			    width: 115%;
+			    height: 100%;
+			    position: absolute;
+			    top: 0;
+			    left: -10%;
+			    transition: opacity 0.5s;
+			    /* transition: opacity 0.5s; 클릭 시 불투명도를 조정할 수 있습니다. */
+			}
+
+			/* 2. t_cha.jpg (양파 캐릭터) - 초기에는 숨기거나 투명하게 */
+			.o_character 
+			{
+			    width: 115%;
+			    height: 100%;
+			    position: absolute;
+			    top: 0;
+			    left: -10%;
+			    opacity: 0; /* 초기에는 숨김 */
+			    transition: opacity 0.5s;
+			    z-index: 100;
+			}
+
+			/* 마우스 오버 시 효과 (선택 사항) */
+			.click_button:hover 
+			{
+			    color: #555555;
+			}
+
+			/* 마우스 오버 시 캐릭터 보이기 */
+			.character_container_o:hover .o_character 
+			{
+			    opacity: 1; 
+			}
+
+			/* 마우스 오버 시 흐릿한 양파 배경 투명하게 */
+			.character_container_o:hover .o_opaque 
+			{
+			    opacity: 0; 
+			}
+
+			/* 양파 Text 영역 */
+			.text_area_o
+			{
+				position: absolute;
+				top: 50%;
+				transform: translateY(-50%);
+				width: 250px;
+				color: #ffffff;
+				z-index: 5;
+				text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+				padding: 20px;
+			}
+
+			.text_area_o h2 
+			{
+			    font-size: clamp(20px, 2.5vw, 36px);
+			    line-height: 1.2;
+			    margin-bottom: 10px;
+			}
+
+			.text_area_o p 
+			{
+			    font-size: clamp(14px, 1.2vw, 16px);
+			    line-height: 1.5;
+			}
+
+			.text_left_o
+			{
+			    top: 70%;
+			    left: 10%; 
+			    text-align: left;
+			}
+
+			.text_right_o
+			{
+			    top: 30%;
+			    right: 10%;
+			    text-align: right;
+			}
+			
+
+ 			
+
+    		/* FOOTER 영역 */
+        	footer
+        	{
+        		background-color: #000000;
+        		display : flex;
+        		justify-content: center;
+        		align-items: center;
+        		padding: 0 20px;
+        		height: 120px;
+        	}
+
+        	#footer
+        	{
+        		width: 100%;
+        		max-width: 1440px;
+        		display: flex;
+        		justify-content: space-between;
+        		align-items: center;
+        	}
+
+        	.footer_logo
+        	{
+        		font-family: 'Arial Black';
+		        color: #FFFFFF;
+		        font-size: clamp(20px, 2.4vw, 35px);
+		        font-weight: bold;
+        	}
+
+        	.copy
+        	{
+        		color: #ffffff;
+        		font-family: 'Pretendard', sans-serif;
+        		font-size: clamp(10px, 1.2vw, 16px);
+        		font-weight: normal;
+        		margin: 0;
+        	}
+
+		</style>
+	</head>
+
+
+
+
+
+<body>
+	<header>
+		<div id="header">
+			<a href="index.html" class="logo">
+	            <p class="logo">
+	            	Veggie Buddy
+	        	</p>
+        	</a>
+	        <nav>
+	            <ul>
+	            <li><a href="test.html">Test</a></li>
+	            <li><a href="buddys.html">Buddys</a></li>
+	            <li><a href="health.html">Health</a></li>
+	            <li><a href="recipe.html">Recipe</a></li>
+	            <li><a href="library.html">Library</a></li>
+	            </ul>
+	        </nav>
+        </div>
+	</header>
+	
+	<main>
+		<!-- 토마토 -->
+		<section id="tomato">
+			<div class="buddy_test_t">
+				<div class="text_area_t text_left_t">
+					<h2>
+						Sweet but with a strong, distinctive aroma
+					</h2>
+					<p>
+						You're drawn to deep, flavorful tastes that leave a lasting impression.
+					</p>
+				</div>
+
+	            <div class="character_container_t">
+	                <img src="00 source/03 buddys/t_opa.png" alt="Opaque Tomato" class="t_opaque"> 
+	                
+	                <img src="00 source/03 buddys/t_cha.png" alt="Tomato Character" class="t_character"> 
+	            </div>
+
+	            <div class="text_area_t text_right_t">
+					<h2>
+						Naturally sweet with a soft texture
+					</h2>
+					<p>
+						You love the gentle sweetness and tender bite that feels easy to enjoy.
+					</p>
+				</div>
+			</div>
+		</section>
+
+		<!-- 브로콜리 -->
+		<section id="broccoli">
+			<div class="buddy_test_b">
+				<div class="text_area_b text_left_b">
+					<h2>
+						A Tiny Forest with Giant Power
+					</h2>
+					<p>
+						What you eat are tiny flower buds, filled with surprising anti-cancer components.
+					</p>
+				</div>
+
+	            <div class="character_container_b">
+	                <img src="00 source/03 buddys/b_opa.png" alt="Opaque broccoli" class="b_opaque"> 
+	                
+	                <img src="00 source/03 buddys/b_cha.png" alt="Tomato broccoli" class="b_character"> 
+	            </div>
+
+	            <div class="text_area_b text_right_b">
+					<h2>
+						Hidden Power in Every 'Tree'
+					</h2>
+					<p>
+						Vitamin C is 2 times that of lemon, 7 times that of potato! Feel the mighty vitality hidden in every little cluster.
+					</p>
+				</div>
+			</div>
+		</section>
+
+		<!-- 당근 -->
+		<section id="carrot">
+			<div class="buddy_test_c">
+				<div class="text_area_c text_left_c">
+					<h2>
+						A Sweet Root with a Secret Past
+					</h2>
+					<p>
+						It was originally purple and yellow, but the color was bred to orange in the Netherlands.
+					</p>
+				</div>
+
+	            <div class="character_container_c">
+	                <img src="00 source/03 buddys/c_opa.png" alt="Opaque Carrot" class="c_opaque"> 
+	                
+	                <img src="00 source/03 buddys/c_cha.png" alt="Carrot Character" class="c_character"> 
+	            </div>
+
+	            <div class="text_area_c text_right_c">
+					<h2>
+						The Eye's Best Friend (That's Not A Myth)
+					</h2>
+					<p>
+						Rich Beta-Carotene converts to Vitamin A in your body, protecting your vision and immunity.
+					</p>
+				</div>
+			</div>
+		</section>
+
+		<!-- 양파 -->
+		<section id="onion">
+			<div class="buddy_test_o">
+				<div class="text_area_o text_left_o">
+					<h2>
+						A Tearful Story of Sweetness
+					</h2>
+					<p>
+						It makes your eyes water the moment you cut it, but offers a contradictory sweetness far richer than sugar when cooked.
+					</p>
+				</div>
+
+	            <div class="character_container_o">
+	                <img src="00 source/03 buddys/o_opa.png" alt="Opaque Onion" class="o_opaque"> 
+	                
+	                <img src="00 source/03 buddys/o_cha.png" alt="Onion Character" class="o_character"> 
+	            </div>
+
+	            <div class="text_area_o text_right_o">
+					<h2>
+						The Ancient's Energy Booster
+					</h2>
+					<p>
+						Ancient Olympic athletes ate it for physical enhancement, a 'natural elixir' that cleanses the oil from blood vessels.
+					</p>
+				</div>
+			</div>
+		</section>
+        
+			
+
+		
+	</main>
+
+
+
+
+	<footer>
+        <div id="footer">
+			<p class="footer_logo">
+				Veggie Buddy
+			</p>
+
+			<p class="copy">
+				COPYRIGHT © 2025 ALL RIGHTS RESERVED BY Veggie Buddy
+			</p>
+		</div>
+	</footer>
+
+</body>
+
+</html>
